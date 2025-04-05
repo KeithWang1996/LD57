@@ -1,0 +1,53 @@
+[gd_scene load_steps=8 format=3 uid="uid://b0k8pomhmvosy"]
+
+[ext_resource type="Texture2D" uid="uid://mc7netx16ibf" path="res://Textures/Door.png" id="1_r150o"]
+[ext_resource type="Texture2D" uid="uid://dbmlfnbw2e1db" path="res://Textures/Elevator.png" id="2_idj7w"]
+[ext_resource type="Texture2D" uid="uid://cke58c37rnj7v" path="res://Textures/ElevatorButton-Sheet.png" id="3_kln2b"]
+[ext_resource type="Script" uid="uid://c4iwwdn173ed2" path="res://Scripts/elevator.gd" id="3_rgh2o"]
+[ext_resource type="Script" uid="uid://dkhasqb8ug45j" path="res://Scripts/FloorButton.gd" id="4_pbw6q"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rgh2o"]
+atlas = ExtResource("3_kln2b")
+region = Rect2(0, 0, 64, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kln2b"]
+size = Vector2(26, 26)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Elevator" type="Sprite2D" parent="."]
+z_index = 1
+scale = Vector2(5, 5)
+texture = ExtResource("2_idj7w")
+script = ExtResource("3_rgh2o")
+
+[node name="LeftDoor" type="Sprite2D" parent="Elevator"]
+z_as_relative = false
+position = Vector2(-50, 0)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("1_r150o")
+
+[node name="RightDoor" type="Sprite2D" parent="Elevator"]
+z_as_relative = false
+position = Vector2(50, 0)
+scale = Vector2(1.6, 1.6)
+texture = ExtResource("1_r150o")
+
+[node name="ButtonPanel" type="Node2D" parent="Elevator"]
+position = Vector2(55.4, 0.2)
+scale = Vector2(0.2, 0.2)
+
+[node name="FloorButton1" type="Area2D" parent="Elevator/ButtonPanel"]
+position = Vector2(-1, 5.96046e-08)
+script = ExtResource("4_pbw6q")
+elevator_node = NodePath("../..")
+
+[node name="ButtonTexture" type="Sprite2D" parent="Elevator/ButtonPanel/FloorButton1"]
+texture = SubResource("AtlasTexture_rgh2o")
+
+[node name="ButtonCollision" type="CollisionShape2D" parent="Elevator/ButtonPanel/FloorButton1"]
+position = Vector2(16, -3.57628e-07)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_kln2b")
+
+[node name="Camera2D" type="Camera2D" parent="."]
